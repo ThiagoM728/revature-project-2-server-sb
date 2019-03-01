@@ -25,4 +25,10 @@ public class EventService {
 		
 		return eventRepository.findEventById(id);
 	}
+
+	public Event updateEvent(Event event, int id) {
+		 return eventRepository.updateEvent(event, id); 
+		 
+	}
+
 }

@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.Event;
@@ -32,6 +34,14 @@ public class EventController {
 	
 	@GetMapping("/viewevent/{id}") 
 	public Event getOneEvent (@PathVariable int id) {
-		return eventService.findEventById(id);
+		return this.eventService.findEventById(id);
 	}
+	
+	@PutMapping("/update/{id}")
+	public Event  updateEvent(@PathVariable int id, @RequestBody Event event ) {
+		  return this.eventService.updateEvent(event, id);
+	}
+	
 }
+
+
