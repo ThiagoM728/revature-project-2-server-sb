@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.sql.SQLException;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,17 +30,18 @@ public class BusinessService {
 	
 	public Business createBusiness(BusinessSignupDTO dto) {
 		Business business = new Business();
+		String username = dto.getUsername();
 		String companyName = dto.getCompanyName();
 		String password = dto.getPassword();
 		String salt = BCrypt.gensalt(12);
 		String passHash = BCrypt.hashpw(dto.getPassword(), salt);
 		String description = dto.getDescription();
 		
+		business.setUsername(username);
 		business.setCompanyName(companyName);
 		business.setSalt(salt);
 		business.setHash(passHash);
 		business.setDescription(description);
-		
 		// TODO: add jbcrrpt to pom.xml salt + hash password
 		// pass this business object to the business repository
 		return businessRepository.createBusiness(business);
@@ -49,7 +52,7 @@ public class BusinessService {
 
 		try {
 			return businessRepository.findById(id);
-		} catch (ClassNotFoundException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return business;
@@ -57,11 +60,12 @@ public class BusinessService {
 	
 	public Business login(LoginDTO dto) {
 		Business business = new Business();
-		int id = dto.getId();
+		//int id = dto.getId();
+		String username = dto.getUsername();
 		
 		try {
-			business = businessRepository.findById(id);
-		}catch(ClassNotFoundException e){
+			business = businessRepository.findByUsername(username);
+		}catch(SQLException e){
 		 e.printStackTrace();
 		}
 		String passhash = BCrypt.hashpw(dto.getPassword(), business.getSalt());
@@ -69,7 +73,7 @@ public class BusinessService {
 		if(business != null && business.getHash().equals(passhash)) {
 			return business;
 		}
-		throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "No business found with this user id");
+		throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "No business found with this username");
 	}
 	
 }
