@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.revature.models.Event;
 import com.revature.models.Student;
 
 @Configuration
@@ -23,6 +24,7 @@ public class HibernateConfig {
 		
 		// Set annotated classes
 		factoryBean.setAnnotatedClasses(Student.class);
+		factoryBean.setAnnotatedClasses(Event.class);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;
 	}
@@ -34,7 +36,7 @@ public class HibernateConfig {
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
 		dataSource.setUsername("postgres");
-		dataSource.setPassword("Tony1988");
+		dataSource.setPassword("18472652614mj");
 		return dataSource;
 	}
 	
