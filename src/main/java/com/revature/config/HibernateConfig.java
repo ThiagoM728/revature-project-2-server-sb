@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.revature.models.Job;
 import com.revature.models.Student;
 
 @Configuration
@@ -23,6 +24,7 @@ public class HibernateConfig {
 		
 		// Set annotated classes
 		factoryBean.setAnnotatedClasses(Student.class);
+		factoryBean.setAnnotatedClasses(Job.class);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;
 	}
