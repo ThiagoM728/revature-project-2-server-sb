@@ -13,7 +13,6 @@ import com.revature.models.Business;
 public class BusinessRepository {
 	@Autowired
 	EntityManagerFactory emf;
-//	SessionFactory sf = emf.unwrap(SessionFactory.class);
 
 	public Business createBusiness(Business business) {
 		SessionFactory sf = emf.unwrap(SessionFactory.class);
@@ -25,7 +24,9 @@ public class BusinessRepository {
 		}
 	}
 	
-	public Business findById(int id) {
+
+	
+	public Business findById(int id) throws ClassNotFoundException{
 		SessionFactory sf = emf.unwrap(SessionFactory.class);
 		
 		try(Session session = sf.openSession()){
