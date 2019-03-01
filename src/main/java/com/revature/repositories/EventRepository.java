@@ -23,4 +23,14 @@ public class EventRepository {
 			return event;
 		}
 	}
+
+	public Event findEventById(int id) {
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try(Session session = sf.openSession()) {
+			return session.get(Event.class, id);
+		}
+		
+	}
+
+	
 }

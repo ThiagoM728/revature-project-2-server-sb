@@ -20,4 +20,9 @@ public class EventService {
 	public Event createEvent (Event event) {
 		return eventRepository.createEvent(event);
 	}
+
+	public Event findEventById(int id) {
+		
+		return eventRepository.findEventById(id);
+	}
 }
