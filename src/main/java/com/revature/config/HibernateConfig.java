@@ -22,9 +22,10 @@ public class HibernateConfig {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 		factoryBean.setConfigLocation(new ClassPathResource("hibernate.cfg.xml"));
 		
+		
 		// Set annotated classes
-		factoryBean.setAnnotatedClasses(Student.class);
-		factoryBean.setAnnotatedClasses(Event.class);
+		Class[] array = {Student.class,Event.class};
+		factoryBean.setAnnotatedClasses(array);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;
 	}
