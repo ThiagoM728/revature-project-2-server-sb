@@ -12,6 +12,9 @@ public class Business {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(length=30)
+	private String username;
+	
 	@Column(name="company_name", length=30)
 	private String companyName;
 	
@@ -36,6 +39,14 @@ public class Business {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getCompanyName() {
@@ -97,6 +108,7 @@ public class Business {
 		result = prime * result + id;
 		result = prime * result + (logo ? 1231 : 1237);
 		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -135,19 +147,26 @@ public class Business {
 				return false;
 		} else if (!salt.equals(other.salt))
 			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Business [id=" + id + ", companyName=" + companyName + ", description=" + description + ", logo=" + logo
-				+ ", companyPhoto=" + companyPhoto + ", hash=" + hash + ", salt=" + salt + "]";
+		return "Business [id=" + id + ", username=" + username + ", companyName=" + companyName + ", description="
+				+ description + ", logo=" + logo + ", companyPhoto=" + companyPhoto + ", hash=" + hash + ", salt="
+				+ salt + "]";
 	}
 
-	public Business(int id, String companyName, String description, boolean logo, boolean companyPhoto, String hash,
-			String salt) {
+	public Business(int id, String username, String companyName, String description, boolean logo, boolean companyPhoto,
+			String hash, String salt) {
 		super();
 		this.id = id;
+		this.username = username;
 		this.companyName = companyName;
 		this.description = description;
 		this.logo = logo;
@@ -158,7 +177,6 @@ public class Business {
 
 	public Business() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 }
