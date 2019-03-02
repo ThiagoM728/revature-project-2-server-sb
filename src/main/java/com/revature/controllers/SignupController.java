@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.dto.BusinessSignupDTO;
+import com.revature.dto.StudentSignupDTO;
 import com.revature.models.Business;
+import com.revature.models.Student;
 import com.revature.services.BusinessService;
 import com.revature.services.StudentService;
 
@@ -23,14 +25,21 @@ public class SignupController {
 	StudentService studentService;
 	
 	@Autowired
-	public SignupController(BusinessService businessService) {
+	public SignupController(BusinessService businessService, StudentService studentService) {
 		super();
 		this.businessService = businessService;
+		this.studentService = studentService;
 	}
 	
 	@PostMapping("/business")
 	//@ResponseBody
 	public Business businessSignup(@RequestBody BusinessSignupDTO dto) throws IOException {
 		return this.businessService.createBusiness(dto);
+	}
+	
+	@PostMapping("/student")
+	//@ResponseBody
+	public Student studentSignup(@RequestBody StudentSignupDTO dto) throws IOException {
+		return this.studentService.createStudent(dto);
 	}
 }
