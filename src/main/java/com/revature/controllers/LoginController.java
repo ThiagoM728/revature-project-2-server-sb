@@ -15,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import com.revature.dto.LoginDTO;
 import com.revature.models.Business;
+import com.revature.models.Student;
 import com.revature.services.BusinessService;
 import com.revature.services.StudentService;
 
@@ -26,9 +27,10 @@ public class LoginController {
 	StudentService studentService;
 	
 	@Autowired
-	public LoginController(BusinessService businessService) {
+	public LoginController(BusinessService businessService, StudentService studentService) {
 		super();
 		this.businessService = businessService;
+		this.studentService= studentService; 
 	}
 	
 	@PostMapping("/business")
@@ -37,11 +39,11 @@ public class LoginController {
 		return this.businessService.login(dto);
 	}
 	
-//	@PostMapping("/student")
-//	//@ResponseBody
-//	public Student studentLogin(@RequestBody LoginDTO dto) throws IOException{
-//		return this.businessService.login(dto);
-//	}
+	@PostMapping("/student")
+	//@ResponseBody
+	public Student studentLogin(@RequestBody LoginDTO dto) throws IOException{
+		return this.studentService.login(dto);
+	}
 	
 	@ExceptionHandler
 	public ResponseEntity<String> handleHttpClientException(HttpClientErrorException e) {
