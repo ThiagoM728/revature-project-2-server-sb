@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.revature.models.Business;
 import com.revature.models.Job;
 import com.revature.models.Student;
 
@@ -21,15 +22,15 @@ public class HibernateConfig {
 		System.out.println("Configuring session factory");
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 		factoryBean.setConfigLocation(new ClassPathResource("hibernate.cfg.xml"));
-		
-		// Set annotated classes
-		Class[] array = {Student.class, Job.class};
+
+		Class[] array = { Student.class, Business.class, Job.class };
+
 		factoryBean.setAnnotatedClasses(array);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;
 	}
-	
-	@Bean(name="dataSource")
+
+	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 		System.out.println("Configuring data source");
 		BasicDataSource dataSource = new BasicDataSource();
@@ -39,7 +40,7 @@ public class HibernateConfig {
 		dataSource.setPassword("Tony1988");
 		return dataSource;
 	}
-	
+
 	@Bean
 	public HibernateTransactionManager getTransactionManager() {
 		System.out.println("Configuring transaction manager");
