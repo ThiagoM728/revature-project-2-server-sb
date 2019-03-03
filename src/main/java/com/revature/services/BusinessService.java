@@ -65,12 +65,14 @@ public class BusinessService {
 		
 		try {
 			business = businessRepository.findByUsername(username);
+			//System.out.println(business);
 		}catch(SQLException e){
 		 e.printStackTrace();
 		}
 		String passhash = BCrypt.hashpw(dto.getPassword(), business.getSalt());
 		
 		if(business != null && business.getHash().equals(passhash)) {
+			//System.out.println("login successful");
 			return business;
 		}
 		throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "No business found with this username");

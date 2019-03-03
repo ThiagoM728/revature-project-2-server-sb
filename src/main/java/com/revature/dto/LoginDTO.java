@@ -79,9 +79,10 @@ public class LoginDTO {
 		return true;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "LoginDTO [username=" + username + ", email=" + email + ", id=" + id + "]";
+		return "LoginDTO [username=" + username + ", email=" + email + ", password=" + password + ", id=" + id + "]";
 	}
 
 	public LoginDTO(String username, String email, String password, int id) {
