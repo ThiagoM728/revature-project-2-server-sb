@@ -61,6 +61,7 @@ public class StudentService {
 	}
 	
 	public Student login(LoginDTO dto) {
+//		System.out.println(dto);
 		Student student = new Student();
 		
 		String email = dto.getEmail();
@@ -71,6 +72,8 @@ public class StudentService {
 			e.printStackTrace();
 		}
 		String passhash = BCrypt.hashpw(dto.getPassword(), student.getSalt());
+//		System.out.println(student);
+//		System.out.println(student.getHash().equals(passhash));
 		
 		if(student != null && student.getHash().equals(passhash)) {
 			return student;

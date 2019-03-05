@@ -1,5 +1,8 @@
 package com.revature.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -25,6 +29,9 @@ public class Job {
 	@JsonBackReference
 //	@JsonManagedReference
 	private Business business;
+	
+	@ManyToMany(mappedBy = "jobs")
+	private Set<Student> students = new HashSet<>();
 
 	@Column(length = 50)
 	private int business_id_fk;
@@ -58,6 +65,14 @@ public class Job {
 
 	public void setBusiness(Business business) {
 		this.business = business;
+	}
+
+	public Set<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(Set<Student> students) {
+		this.students = students;
 	}
 
 	public int getBusiness_id_fk() {
@@ -119,6 +134,7 @@ public class Job {
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
 		result = prime * result + ((major == null) ? 0 : major.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((students == null) ? 0 : students.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
@@ -161,6 +177,11 @@ public class Job {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (students == null) {
+			if (other.students != null)
+				return false;
+		} else if (!students.equals(other.students))
+			return false;
 		if (type == null) {
 			if (other.type != null)
 				return false;
@@ -171,15 +192,17 @@ public class Job {
 
 	@Override
 	public String toString() {
-		return "Job [id=" + id + ", business=" + business + ", business_id_fk=" + business_id_fk + ", name=" + name
-				+ ", major=" + major + ", location=" + location + ", department=" + department + ", type=" + type + "]";
+		return "Job [id=" + id + ", business=" + business + ", students=" + students + ", business_id_fk="
+				+ business_id_fk + ", name=" + name + ", major=" + major + ", location=" + location + ", department="
+				+ department + ", type=" + type + "]";
 	}
 
-	public Job(int id, Business business, int business_id_fk, String name, String major, String location,
-			String department, String type) {
+	public Job(int id, Business business, Set<Student> students, int business_id_fk, String name, String major,
+			String location, String department, String type) {
 		super();
 		this.id = id;
 		this.business = business;
+		this.students = students;
 		this.business_id_fk = business_id_fk;
 		this.name = name;
 		this.major = major;
@@ -192,5 +215,7 @@ public class Job {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }
