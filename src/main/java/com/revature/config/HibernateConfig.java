@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.revature.models.Business;
 import com.revature.models.Job;
+import com.revature.models.Job_Student;
 import com.revature.models.Student;
 
 @Configuration
@@ -23,8 +24,8 @@ public class HibernateConfig {
 		LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
 		factoryBean.setConfigLocation(new ClassPathResource("hibernate.cfg.xml"));
 
-		Class[] array = { Student.class, Business.class, Job.class };
-
+		Class[] array = { Student.class, Business.class, Job.class, Job_Student.class };
+ 
 		factoryBean.setAnnotatedClasses(array);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;

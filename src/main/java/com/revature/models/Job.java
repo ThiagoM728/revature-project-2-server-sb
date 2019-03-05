@@ -1,31 +1,51 @@
 package com.revature.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Job {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
+
 	// private int companyId;
-	
+
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinColumn(name = "business_id")
+	@JsonBackReference
+//	@JsonManagedReference
+	private Business business;
+
+	@Column(length = 50)
+	private int business_id_fk;
+
 	@Column(length = 30)
 	private String name;
-	
+
 	@Column(length = 20)
 	private String major;
-	
+
 	@Column(length = 20) // format = "City, State"
 	private String location;
-	
+
 	@Column(length = 20)
 	private String department;
-	
+
 	@Column(length = 10)
 	private String type; // TODO: maybe change to foreign key pointing to a table that holds the types?
 
@@ -35,6 +55,22 @@ public class Job {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public Business getBusiness() {
+		return business;
+	}
+
+	public void setBusiness(Business business) {
+		this.business = business;
+	}
+
+	public int getBusiness_id_fk() {
+		return business_id_fk;
+	}
+
+	public void setBusiness_id_fk(int business_id_fk) {
+		this.business_id_fk = business_id_fk;
 	}
 
 	public String getName() {
@@ -81,6 +117,8 @@ public class Job {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((business == null) ? 0 : business.hashCode());
+		result = prime * result + business_id_fk;
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((location == null) ? 0 : location.hashCode());
@@ -99,6 +137,13 @@ public class Job {
 		if (getClass() != obj.getClass())
 			return false;
 		Job other = (Job) obj;
+		if (business == null) {
+			if (other.business != null)
+				return false;
+		} else if (!business.equals(other.business))
+			return false;
+		if (business_id_fk != other.business_id_fk)
+			return false;
 		if (department == null) {
 			if (other.department != null)
 				return false;
@@ -131,13 +176,16 @@ public class Job {
 
 	@Override
 	public String toString() {
-		return "Job [id=" + id + ", name=" + name + ", major=" + major + ", location=" + location + ", department="
-				+ department + ", type=" + type + "]";
+		return "Job [id=" + id + ", business=" + business + ", business_id_fk=" + business_id_fk + ", name=" + name
+				+ ", major=" + major + ", location=" + location + ", department=" + department + ", type=" + type + "]";
 	}
 
-	public Job(int id, String name, String major, String location, String department, String type) {
+	public Job(int id, Business business, int business_id_fk, String name, String major, String location,
+			String department, String type) {
 		super();
 		this.id = id;
+		this.business = business;
+		this.business_id_fk = business_id_fk;
 		this.name = name;
 		this.major = major;
 		this.location = location;
@@ -149,5 +197,5 @@ public class Job {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 }

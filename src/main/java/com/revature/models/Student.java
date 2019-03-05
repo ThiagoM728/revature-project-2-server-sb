@@ -1,30 +1,40 @@
 package com.revature.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.Email;
 
 @Entity
 public class Student {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="first_name", length=30)
+
+	@Column(name = "first_name", length = 30)
 	private String firstName;
-	
-	@Column(name="last_name", length=30)
+
+	@Column(name = "last_name", length = 30)
 	private String lastName;
-	
-	@Column(length=50)
+
+	@Column(length = 50)
+	@Email
 	private String email;
-	
-	@Column(length=255)
+
+	@Column(length = 255)
 	private String hash;
-	
-	@Column(length=255)
+
+	@Column(length = 255)
 	private String salt;
 
 	public int getId() {
@@ -129,11 +139,11 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Students [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", hash=" + hash + ", salt=" + salt + "]";
 	}
 
-	public Student(int id, String firstName, String lastName, String email, String hash, String salt) {
+	public Student(int id, String firstName, String lastName, @Email String email, String hash, String salt) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -145,5 +155,7 @@ public class Student {
 
 	public Student() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
+
 }

@@ -43,16 +43,10 @@ public class LoginController {
 	@PostMapping("/student")
 	//@ResponseBody
 	public Student studentLogin(@RequestBody LoginDTO dto) throws IOException{
-		System.out.println(dto);
+//		System.out.println(dto);
 		return this.studentService.login(dto);
 	}
 	
-	@ExceptionHandler
-	public ResponseEntity<String> handleHttpClientException(HttpClientErrorException e) {
-		String message = e.getMessage();
-		return ResponseEntity
-				.status(e.getStatusCode())
-				.body(message);
-	}
+	
 	
 }

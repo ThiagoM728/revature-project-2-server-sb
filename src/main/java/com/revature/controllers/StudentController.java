@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.dto.Job_Student_DTO;
+import com.revature.models.Job;
 import com.revature.models.Student;
 import com.revature.services.StudentService;
 
@@ -25,7 +29,13 @@ public class StudentController {
 	
 	@PostMapping("")
 //	@ResponseBody
-	public Student saveStudent(@RequestBody Student student) {
+	public Student saveStudent(@RequestBody @Valid Student student) {
 		return this.studentService.createStudent(student);
+	}
+	
+	@PostMapping("/addFav")
+	public Job saveJob(@RequestBody Job_Student_DTO dto) {
+		System.out.println(dto);
+		return this.studentService.createFav(dto);
 	}
 }

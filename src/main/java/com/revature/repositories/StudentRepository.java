@@ -10,22 +10,25 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.revature.models.Job;
+import com.revature.models.Job_Student;
 import com.revature.models.Student;
 
 @Repository
 public class StudentRepository {
 	@Autowired
 	EntityManagerFactory emf;
-	
+	@Autowired
+	JobRepository jobRepository;
+
 	public Student createStudent(Student student) {
 		SessionFactory sf = emf.unwrap(SessionFactory.class);
-		
-		try(Session session = sf.openSession()) {
+
+		try (Session session = sf.openSession()) {
 			int id = (int) session.save(student);
 			student.setId(id);
 			return student;
@@ -34,33 +37,53 @@ public class StudentRepository {
 
 	public Student findById(int id) throws SQLException {
 		SessionFactory sf = emf.unwrap(SessionFactory.class);
-		
-		try(Session session = sf.openSession()) {
+
+		try (Session session = sf.openSession()) {
 			return session.get(Student.class, id);
 		}
-		
+
 	}
-	
-	public Student findByEmail (String email) throws SQLException {
+
+	public Student findByEmail(String email) throws SQLException {
 		SessionFactory sf = emf.unwrap(SessionFactory.class);
-		
+
 		try (Session session = sf.openSession()) {
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<Student> criteria = cb.createQuery(Student.class);
 			Root<Student> root = criteria.from(Student.class);
 			criteria.select(root).where(cb.equal(root.get("email"), email));
-			Query<Student> query = session.createQuery(criteria); 
+			Query<Student> query = session.createQuery(criteria);
 			List<Student> results = query.getResultList();
-			
-			if(results.isEmpty() || results.size() > 1) {
+
+			if (results.isEmpty() || results.size() > 1) {
 				return null;
 			} else {
 				Student student = results.get(0);
-				return student; 
+				return student;
 			}
-			
+
 		}
 	}
-	
-	
+
+	public Job addFav(int job_id, int student_id) {
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+
+		try (Session session = sf.openSession()) {
+			Job job = new Job();
+			try {
+				job = jobRepository.getJobById(job_id);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Job_Student js = new Job_Student();
+			js.setJobId(job_id);
+			js.setStudentId(student_id);
+			
+			int id = (int) session.save(js);
+			js.setId(id);
+			System.out.println(js);
+			return job;
+		}
+	}
 }
