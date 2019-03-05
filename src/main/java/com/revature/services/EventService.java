@@ -1,8 +1,11 @@
 package com.revature.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.models.Business;
 import com.revature.models.Event;
 import com.revature.repositories.EventRepository;
 
@@ -29,6 +32,11 @@ public class EventService {
 	public Event updateEvent(Event event, int id) {
 		 return eventRepository.updateEvent(event, id); 
 		 
+	}
+
+	public List<Business> getBusiness(int id) {
+		// TODO Auto-generated method stub
+		return eventRepository.getBusiness(id);
 	}
 
 }

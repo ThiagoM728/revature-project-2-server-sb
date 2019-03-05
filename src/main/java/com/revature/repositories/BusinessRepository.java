@@ -15,7 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.revature.models.Business;
+import com.revature.models.Business_Event;
 import com.revature.models.Job;
+import com.revature.models.Job_Student;
 
 @Repository
 public class BusinessRepository {
@@ -81,5 +83,28 @@ public class BusinessRepository {
 				return results;
 			}
 		}	
+	}
+
+	public Business rsvpEvent(int business_id, int event_id) {
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+
+		try (Session session = sf.openSession()) {
+			Business business = new Business();
+			try {
+				business = findById(business_id);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Business_Event be = new Business_Event();
+			be.setBusinessId(business_id);
+			be.setEventId(event_id);
+			
+			int id = (int) session.save(be);
+			be.setId(id);
+//			System.out.println(js);
+			return business;
+		}
+		
 	}
 }

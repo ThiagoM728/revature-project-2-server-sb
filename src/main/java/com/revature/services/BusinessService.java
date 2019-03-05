@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.revature.dto.BusinessSignupDTO;
+import com.revature.dto.Business_Event_DTO;
 import com.revature.dto.LoginDTO;
 import com.revature.models.Business;
 import com.revature.models.Job;
@@ -98,5 +99,12 @@ public class BusinessService {
 		}
 		return null;
 		//TODO: fix error handling, currently displays nothing
+	}
+
+	public Business rsvpEvent(Business_Event_DTO dto) {
+		// TODO Auto-generated method stub
+		int business_id = dto.getBusinessId();
+		int event_id = dto.getEventId();
+		return businessRepository.rsvpEvent(business_id, event_id);
 	}
 }

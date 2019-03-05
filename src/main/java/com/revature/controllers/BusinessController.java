@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.revature.dto.BusinessSignupDTO;
+import com.revature.dto.Business_Event_DTO;
 import com.revature.models.Business;
 import com.revature.models.Job;
 import com.revature.services.BusinessService;
@@ -36,6 +37,11 @@ public class BusinessController {
 	// @ResponseBody
 	public Business saveBusiness(@RequestBody BusinessSignupDTO dto) {
 		return this.businessService.createBusiness(dto);
+	}
+	
+	@PostMapping("/rsvpEvent")
+	public Business rsvpEvent(@RequestBody Business_Event_DTO dto) {
+		return this.businessService.rsvpEvent(dto);
 	}
 
 	@GetMapping("/{id}")

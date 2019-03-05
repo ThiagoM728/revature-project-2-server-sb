@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +91,9 @@ public class StudentService {
 		System.out.println(job_id);
 		System.out.println(student_id);
 		return studentRepository.addFav(job_id, student_id);
+	}
+
+	public List<Job> getFavJobs(int id) {
+		return studentRepository.getFavJobs(id);
 	}
 }
