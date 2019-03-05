@@ -10,8 +10,9 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.revature.models.Event;
 import com.revature.models.Business;
+import com.revature.models.Business_Event;
+import com.revature.models.Event;
 import com.revature.models.Job;
 import com.revature.models.Job_Student;
 import com.revature.models.Student;
@@ -27,7 +28,7 @@ public class HibernateConfig {
 		
 		
 		// Set annotated classes
-		Class[] array = {Student.class, Event.class, Business.class, Job.class, Job_Student.class};
+		Class[] array = {Student.class, Event.class, Business.class, Job.class, Job_Student.class, Business_Event.class};
 		factoryBean.setAnnotatedClasses(array);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;
