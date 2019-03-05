@@ -37,11 +37,6 @@ public class Student {
 	@Column(length = 255)
 	private String salt;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-	@JoinTable(name = "student_job", joinColumns = { @JoinColumn(name = "student_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "job_id") })
-	Set<Job> jobs = new HashSet<>();
-
 	public int getId() {
 		return id;
 	}
@@ -90,14 +85,6 @@ public class Student {
 		this.salt = salt;
 	}
 
-	public Set<Job> getJobs() {
-		return jobs;
-	}
-
-	public void setJobs(Set<Job> jobs) {
-		this.jobs = jobs;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -106,7 +93,6 @@ public class Student {
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((hash == null) ? 0 : hash.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((jobs == null) ? 0 : jobs.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
 		return result;
@@ -138,11 +124,6 @@ public class Student {
 			return false;
 		if (id != other.id)
 			return false;
-		if (jobs == null) {
-			if (other.jobs != null)
-				return false;
-		} else if (!jobs.equals(other.jobs))
-			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
@@ -159,11 +140,10 @@ public class Student {
 	@Override
 	public String toString() {
 		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
-				+ ", hash=" + hash + ", salt=" + salt + ", jobs=" + jobs + "]";
+				+ ", hash=" + hash + ", salt=" + salt + "]";
 	}
 
-	public Student(int id, String firstName, String lastName, @Email String email, String hash, String salt,
-			Set<Job> jobs) {
+	public Student(int id, String firstName, String lastName, @Email String email, String hash, String salt) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -171,11 +151,11 @@ public class Student {
 		this.email = email;
 		this.hash = hash;
 		this.salt = salt;
-		this.jobs = jobs;
 	}
 
 	public Student() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 }

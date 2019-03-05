@@ -1,6 +1,5 @@
 package com.revature.services;
 
-import java.io.IOException;
 import java.sql.SQLException;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -9,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import com.revature.dto.Job_Student_DTO;
 import com.revature.dto.LoginDTO;
 import com.revature.dto.StudentSignupDTO;
+import com.revature.models.Job;
 import com.revature.models.Student;
 import com.revature.repositories.StudentRepository;
 
@@ -80,5 +81,14 @@ public class StudentService {
 		}
 		
 		throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "No business found with this email ");
+	}
+
+	public Job createFav(Job_Student_DTO dto) {
+		// TODO Auto-generated method stub
+		int job_id = dto.getJobId();
+		int student_id = dto.getStudentId();
+		System.out.println(job_id);
+		System.out.println(student_id);
+		return studentRepository.addFav(job_id, student_id);
 	}
 }
