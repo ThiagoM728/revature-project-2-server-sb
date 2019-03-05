@@ -47,12 +47,6 @@ public class LoginController {
 		return this.studentService.login(dto);
 	}
 	
-	@ExceptionHandler
-	public ResponseEntity<String> handleHttpClientException(HttpClientErrorException e) {
-		String message = e.getMessage();
-		return ResponseEntity
-				.status(e.getStatusCode())
-				.body(message);
-	}
+	
 	
 }

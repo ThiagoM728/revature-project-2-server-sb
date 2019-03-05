@@ -1,16 +1,29 @@
 package com.revature.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Business {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+	@OneToMany(fetch=FetchType.EAGER)
+//	@JsonBackReference
+	@JoinColumn(name = "job_id")
+	@JsonManagedReference
+	private List<Job> jobs;
 	
 	@Column(length=30)
 	private String username;
@@ -39,6 +52,14 @@ public class Business {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Job> getJobs() {
+		return jobs;
+	}
+
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
 	}
 
 	public String getUsername() {
@@ -106,6 +127,7 @@ public class Business {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((hash == null) ? 0 : hash.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((jobs == null) ? 0 : jobs.hashCode());
 		result = prime * result + (logo ? 1231 : 1237);
 		result = prime * result + ((salt == null) ? 0 : salt.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -140,6 +162,11 @@ public class Business {
 			return false;
 		if (id != other.id)
 			return false;
+		if (jobs == null) {
+			if (other.jobs != null)
+				return false;
+		} else if (!jobs.equals(other.jobs))
+			return false;
 		if (logo != other.logo)
 			return false;
 		if (salt == null) {
@@ -157,15 +184,16 @@ public class Business {
 
 	@Override
 	public String toString() {
-		return "Business [id=" + id + ", username=" + username + ", companyName=" + companyName + ", description="
-				+ description + ", logo=" + logo + ", companyPhoto=" + companyPhoto + ", hash=" + hash + ", salt="
-				+ salt + "]";
+		return "Business [id=" + id + ", jobs=" + jobs + ", username=" + username + ", companyName=" + companyName
+				+ ", description=" + description + ", logo=" + logo + ", companyPhoto=" + companyPhoto + ", hash="
+				+ hash + ", salt=" + salt + "]";
 	}
 
-	public Business(int id, String username, String companyName, String description, boolean logo, boolean companyPhoto,
-			String hash, String salt) {
+	public Business(int id, List<Job> jobs, String username, String companyName, String description, boolean logo,
+			boolean companyPhoto, String hash, String salt) {
 		super();
 		this.id = id;
+		this.jobs = jobs;
 		this.username = username;
 		this.companyName = companyName;
 		this.description = description;
@@ -177,6 +205,10 @@ public class Business {
 
 	public Business() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
+	
+
+		
 }

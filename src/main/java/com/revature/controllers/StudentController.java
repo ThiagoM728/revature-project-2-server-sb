@@ -1,5 +1,7 @@
 package com.revature.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +27,7 @@ public class StudentController {
 	
 	@PostMapping("")
 //	@ResponseBody
-	public Student saveStudent(@RequestBody Student student) {
+	public Student saveStudent(@RequestBody @Valid Student student) {
 		return this.studentService.createStudent(student);
 	}
 }

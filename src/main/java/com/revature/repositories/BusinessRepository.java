@@ -10,12 +10,12 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.revature.models.Business;
+import com.revature.models.Job;
 
 @Repository
 public class BusinessRepository {
@@ -62,5 +62,24 @@ public class BusinessRepository {
 				return business;
 			}
 		}
+	}
+	
+	public List<Job> getJobsById(int id) {
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try(Session session = sf.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Job> criteria = cb.createQuery(Job.class);
+			Root<Job> root = criteria.from(Job.class);
+			// System.out.println(id);
+			criteria.select(root).where(cb.equal(root.get("business_id_fk"), id));
+			Query<Job> query = session.createQuery(criteria); 
+			List<Job> results = query.getResultList();
+			
+			if(results.isEmpty()) {
+				return null;
+			} else {
+				return results;
+			}
+		}	
 	}
 }

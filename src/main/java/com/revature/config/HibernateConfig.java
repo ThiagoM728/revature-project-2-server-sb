@@ -24,7 +24,7 @@ public class HibernateConfig {
 		factoryBean.setConfigLocation(new ClassPathResource("hibernate.cfg.xml"));
 
 		Class[] array = { Student.class, Business.class, Job.class };
-
+ 
 		factoryBean.setAnnotatedClasses(array);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;

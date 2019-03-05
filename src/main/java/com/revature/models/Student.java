@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 
 @Entity
 public class Student {
@@ -19,6 +20,7 @@ public class Student {
 	private String lastName;
 	
 	@Column(length=50)
+	@Email
 	private String email;
 	
 	@Column(length=255)
