@@ -11,6 +11,9 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.revature.models.Event;
+import com.revature.models.Business;
+import com.revature.models.Job;
+import com.revature.models.Job_Student;
 import com.revature.models.Student;
 
 @Configuration
@@ -24,23 +27,23 @@ public class HibernateConfig {
 		
 		
 		// Set annotated classes
-		Class[] array = {Student.class,Event.class};
+		Class[] array = {Student.class, Event.class, Business.class, Job.class, Job_Student.class};
 		factoryBean.setAnnotatedClasses(array);
 		factoryBean.setDataSource(getDataSource());
 		return factoryBean;
 	}
-	
-	@Bean(name="dataSource")
+
+	@Bean(name = "dataSource")
 	public DataSource getDataSource() {
 		System.out.println("Configuring data source");
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
-		dataSource.setUsername("postgres");
-		dataSource.setPassword("18472652614mj");
+		dataSource.setUrl(System.getenv("krillinURL"));
+		dataSource.setUsername(System.getenv("krillinUser"));
+		dataSource.setPassword(System.getenv("krillinPass"));
 		return dataSource;
 	}
-	
+
 	@Bean
 	public HibernateTransactionManager getTransactionManager() {
 		System.out.println("Configuring transaction manager");
