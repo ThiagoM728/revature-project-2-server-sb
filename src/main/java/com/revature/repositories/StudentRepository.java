@@ -84,7 +84,7 @@ public class StudentRepository {
 			js.setActive(true);
 			
 			int id = (int) session.save(js);
-			js.setId(id);
+//			js.setId(id);
 //			System.out.println(js);
 			return job;
 		}

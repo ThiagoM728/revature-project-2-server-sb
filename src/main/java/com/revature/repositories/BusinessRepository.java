@@ -99,10 +99,10 @@ public class BusinessRepository {
 			Business_Event be = new Business_Event();
 			be.setBusinessId(business_id);
 			be.setEventId(event_id);
+			be.setActive(true);
 			
 			int id = (int) session.save(be);
-			be.setId(id);
-//			System.out.println(js);
+//			be.setId(id);
 			return business;
 		}
 		
