@@ -21,7 +21,7 @@ import com.revature.models.Business;
 import com.revature.models.Job;
 import com.revature.services.BusinessService;
 
-@CrossOrigin(allowedHeaders = "content-type", methods = { RequestMethod.GET, RequestMethod.POST })
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "content-type", methods = { RequestMethod.GET, RequestMethod.POST })
 @RestController
 @RequestMapping("/business")
 public class BusinessController {

@@ -88,12 +88,15 @@ public class StudentService {
 		// TODO Auto-generated method stub
 		int job_id = dto.getJobId();
 		int student_id = dto.getStudentId();
-		System.out.println(job_id);
-		System.out.println(student_id);
 		return studentRepository.addFav(job_id, student_id);
 	}
 
 	public List<Job> getFavJobs(int id) {
 		return studentRepository.getFavJobs(id);
+	}
+
+	public Job removeFavJob(int s_id, int j_id) {
+		// TODO Auto-generated method stub
+		return studentRepository.removeFavJob(s_id, j_id);
 	}
 }

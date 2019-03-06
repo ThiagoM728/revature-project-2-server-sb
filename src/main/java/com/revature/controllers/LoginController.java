@@ -19,7 +19,7 @@ import com.revature.models.Student;
 import com.revature.services.BusinessService;
 import com.revature.services.StudentService;
 
-@CrossOrigin(allowedHeaders="content-type", methods= {RequestMethod.GET, RequestMethod.POST})
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "content-type", methods = { RequestMethod.GET, RequestMethod.POST })
 @RestController
 @RequestMapping("/login")
 public class LoginController {

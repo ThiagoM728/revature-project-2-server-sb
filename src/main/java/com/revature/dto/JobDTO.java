@@ -7,6 +7,7 @@ public class JobDTO {
 	private String location_city;
 	private String location_state;
 	private String department;
+	private String description;
 	private String type;
 	public int getBusiness_id() {
 		return business_id;
@@ -44,6 +45,12 @@ public class JobDTO {
 	public void setDepartment(String department) {
 		this.department = department;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public String getType() {
 		return type;
 	}
@@ -56,6 +63,7 @@ public class JobDTO {
 		int result = 1;
 		result = prime * result + business_id;
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((location_city == null) ? 0 : location_city.hashCode());
 		result = prime * result + ((location_state == null) ? 0 : location_state.hashCode());
 		result = prime * result + ((major == null) ? 0 : major.hashCode());
@@ -78,6 +86,11 @@ public class JobDTO {
 			if (other.department != null)
 				return false;
 		} else if (!department.equals(other.department))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
 			return false;
 		if (location_city == null) {
 			if (other.location_city != null)
@@ -109,11 +122,11 @@ public class JobDTO {
 	@Override
 	public String toString() {
 		return "JobDTO [business_id=" + business_id + ", name=" + name + ", major=" + major + ", location_city="
-				+ location_city + ", location_state=" + location_state + ", department=" + department + ", type=" + type
-				+ "]";
+				+ location_city + ", location_state=" + location_state + ", department=" + department + ", description="
+				+ description + ", type=" + type + "]";
 	}
 	public JobDTO(int business_id, String name, String major, String location_city, String location_state,
-			String department, String type) {
+			String department, String description, String type) {
 		super();
 		this.business_id = business_id;
 		this.name = name;
@@ -121,6 +134,7 @@ public class JobDTO {
 		this.location_city = location_city;
 		this.location_state = location_state;
 		this.department = department;
+		this.description = description;
 		this.type = type;
 	}
 	public JobDTO() {

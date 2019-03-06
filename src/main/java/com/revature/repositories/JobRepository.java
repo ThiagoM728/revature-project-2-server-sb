@@ -11,12 +11,14 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.revature.models.Business;
 import com.revature.models.Job;
+import com.revature.models.Job_Student;
 import com.revature.models.Student;
 
 @Repository
@@ -44,5 +46,41 @@ public class JobRepository {
 
 		}
 	}
-	
+
+	public Job updateActiveJob(int id) {
+		// TODO Auto-generated method stub
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try (Session session = sf.openSession()) {
+			Job job = new Job();
+			try {
+				job = getJobById(id);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			job.setActive(false);
+//			System.out.println(job);
+			Transaction tx = session.beginTransaction();
+			session.update(job);
+			tx.commit();
+			return job;
+
+		}
+	}
+
+	public List<Job> getAllJobs() {
+		// TODO Auto-generated method stub
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+
+		try (Session session = sf.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Job> criteria = cb.createQuery(Job.class);
+			Root<Job> root = criteria.from(Job.class);
+			// System.out.println(id);
+			criteria.select(root);
+			Query<Job> query = session.createQuery(criteria); 
+			return query.getResultList();
+		}
+	}
+
 }

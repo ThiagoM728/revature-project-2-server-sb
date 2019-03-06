@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,11 +37,15 @@ public class JobService {
 		//job.setBusinessId(dto.getBusiness_id());
 		job.setBusiness(business);
 		job.setBusiness_id_fk(business_id);
+		job.setBusinessName(business.getCompanyName());
 //		job.setBusiness_id(business_id);
 		job.setName(dto.getName());
 		job.setMajor(dto.getMajor());
-		job.setLocation(dto.getLocation_state());
+		job.setLocationCity(dto.getLocation_city());
+		job.setLocationState(dto.getLocation_state());
 		job.setDepartment(dto.getDepartment());
+		job.setDescription(dto.getDescription());
+		job.setActive(true);
 		job.setType(dto.getType());
 		return jobRepository.createJob(job);
 	}
@@ -56,4 +61,28 @@ public class JobService {
 		}
 		return job;
 	}
+
+	public Job updateActiveJob(int id) {
+		// TODO Auto-generated method stub
+		return jobRepository.updateActiveJob(id);
+	}
+
+	public List<Job> getAllJobs() {
+		// TODO Auto-generated method stub
+		return jobRepository.getAllJobs();
+	}
+
+	public Business getBusiness(int id) {
+		// TODO Auto-generated method stub
+		Business business = new Business();
+		try {
+			business = b_repo.findById(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(business);
+		return business;
+	}
+
 }

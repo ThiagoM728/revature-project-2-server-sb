@@ -33,6 +33,9 @@ public class Job {
 
 	@Column(length = 50)
 	private int business_id_fk;
+	
+	@Column(length = 100, name = "business_name")
+	private String businessName;
 
 	@Column(length = 30)
 	private String name;
@@ -40,14 +43,23 @@ public class Job {
 	@Column(length = 20)
 	private String major;
 
-	@Column(length = 20) // format = "City, State"
-	private String location;
+	@Column(length = 20, name = "location_city") // format = "City, State"
+	private String locationCity;
+
+	@Column(length = 20, name = "location_state") // format = "City, State"
+	private String locationState;
 
 	@Column(length = 20)
 	private String department;
+	
+	@Column(length = 255)
+	private String description;
 
 	@Column(length = 10)
 	private String type; // TODO: maybe change to foreign key pointing to a table that holds the types?
+
+	@Column(length = 10)
+	private boolean active;
 
 	public int getId() {
 		return id;
@@ -73,6 +85,14 @@ public class Job {
 		this.business_id_fk = business_id_fk;
 	}
 
+	public String getBusinessName() {
+		return businessName;
+	}
+
+	public void setBusinessName(String businessName) {
+		this.businessName = businessName;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -89,12 +109,20 @@ public class Job {
 		this.major = major;
 	}
 
-	public String getLocation() {
-		return location;
+	public String getLocationCity() {
+		return locationCity;
 	}
 
-	public void setLocation(String location) {
-		this.location = location;
+	public void setLocationCity(String locationCity) {
+		this.locationCity = locationCity;
+	}
+
+	public String getLocationState() {
+		return locationState;
+	}
+
+	public void setLocationState(String locationState) {
+		this.locationState = locationState;
 	}
 
 	public String getDepartment() {
@@ -105,6 +133,14 @@ public class Job {
 		this.department = department;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -113,15 +149,27 @@ public class Job {
 		this.type = type;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (active ? 1231 : 1237);
 		result = prime * result + ((business == null) ? 0 : business.hashCode());
+		result = prime * result + ((businessName == null) ? 0 : businessName.hashCode());
 		result = prime * result + business_id_fk;
 		result = prime * result + ((department == null) ? 0 : department.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((location == null) ? 0 : location.hashCode());
+		result = prime * result + ((locationCity == null) ? 0 : locationCity.hashCode());
+		result = prime * result + ((locationState == null) ? 0 : locationState.hashCode());
 		result = prime * result + ((major == null) ? 0 : major.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
@@ -137,10 +185,17 @@ public class Job {
 		if (getClass() != obj.getClass())
 			return false;
 		Job other = (Job) obj;
+		if (active != other.active)
+			return false;
 		if (business == null) {
 			if (other.business != null)
 				return false;
 		} else if (!business.equals(other.business))
+			return false;
+		if (businessName == null) {
+			if (other.businessName != null)
+				return false;
+		} else if (!businessName.equals(other.businessName))
 			return false;
 		if (business_id_fk != other.business_id_fk)
 			return false;
@@ -149,12 +204,22 @@ public class Job {
 				return false;
 		} else if (!department.equals(other.department))
 			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
 		if (id != other.id)
 			return false;
-		if (location == null) {
-			if (other.location != null)
+		if (locationCity == null) {
+			if (other.locationCity != null)
 				return false;
-		} else if (!location.equals(other.location))
+		} else if (!locationCity.equals(other.locationCity))
+			return false;
+		if (locationState == null) {
+			if (other.locationState != null)
+				return false;
+		} else if (!locationState.equals(other.locationState))
 			return false;
 		if (major == null) {
 			if (other.major != null)
@@ -176,21 +241,28 @@ public class Job {
 
 	@Override
 	public String toString() {
-		return "Job [id=" + id + ", business=" + business + ", business_id_fk=" + business_id_fk + ", name=" + name
-				+ ", major=" + major + ", location=" + location + ", department=" + department + ", type=" + type + "]";
+		return "Job [id=" + id + ", business=" + business + ", business_id_fk=" + business_id_fk + ", businessName="
+				+ businessName + ", name=" + name + ", major=" + major + ", locationCity=" + locationCity
+				+ ", locationState=" + locationState + ", department=" + department + ", description=" + description
+				+ ", type=" + type + ", active=" + active + "]";
 	}
 
-	public Job(int id, Business business, int business_id_fk, String name, String major, String location,
-			String department, String type) {
+	public Job(int id, Business business, int business_id_fk, String businessName, String name, String major,
+			String locationCity, String locationState, String department, String description, String type,
+			boolean active) {
 		super();
 		this.id = id;
 		this.business = business;
 		this.business_id_fk = business_id_fk;
+		this.businessName = businessName;
 		this.name = name;
 		this.major = major;
-		this.location = location;
+		this.locationCity = locationCity;
+		this.locationState = locationState;
 		this.department = department;
+		this.description = description;
 		this.type = type;
+		this.active = active;
 	}
 
 	public Job() {
@@ -198,4 +270,5 @@ public class Job {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 }
