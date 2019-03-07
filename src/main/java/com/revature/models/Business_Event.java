@@ -1,30 +1,23 @@
 package com.revature.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Business_Event {
+public class Business_Event implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-
 	@Column(length = 20, name = "business_id")
 	private int businessId;
 
+	@Id
 	@Column(length = 20, name = "event_id")
 	private int eventId;
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	
+	@Column(length = 10)
+	private boolean active;
 
 	public int getBusinessId() {
 		return businessId;
@@ -42,13 +35,21 @@ public class Business_Event {
 		this.eventId = eventId;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (active ? 1231 : 1237);
 		result = prime * result + businessId;
 		result = prime * result + eventId;
-		result = prime * result + id;
 		return result;
 	}
 
@@ -61,30 +62,32 @@ public class Business_Event {
 		if (getClass() != obj.getClass())
 			return false;
 		Business_Event other = (Business_Event) obj;
+		if (active != other.active)
+			return false;
 		if (businessId != other.businessId)
 			return false;
 		if (eventId != other.eventId)
-			return false;
-		if (id != other.id)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Business_Event [id=" + id + ", businessId=" + businessId + ", eventId=" + eventId + "]";
+		return "Business_Event [businessId=" + businessId + ", eventId=" + eventId + ", active=" + active + "]";
 	}
 
-	public Business_Event(int id, int businessId, int eventId) {
+	public Business_Event(int businessId, int eventId, boolean active) {
 		super();
-		this.id = id;
 		this.businessId = businessId;
 		this.eventId = eventId;
+		this.active = active;
 	}
 
 	public Business_Event() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	
 
 }

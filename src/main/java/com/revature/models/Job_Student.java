@@ -1,5 +1,7 @@
 package com.revature.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,24 +9,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Job_Student {
+public class Job_Student implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-
 	@Column(length = 20, name = "job_id")
-	private int jobId;
+	private Integer jobId;
 
+	@Id
 	@Column(length = 20, name = "student_id")
-	private int studentId;
+	private Integer studentId;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
+	@Column(length = 10)
+	private boolean active;
 
 	public int getJobId() {
 		return jobId;
@@ -42,11 +37,19 @@ public class Job_Student {
 		this.studentId = studentId;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + (active ? 1231 : 1237);
 		result = prime * result + jobId;
 		result = prime * result + studentId;
 		return result;
@@ -61,7 +64,7 @@ public class Job_Student {
 		if (getClass() != obj.getClass())
 			return false;
 		Job_Student other = (Job_Student) obj;
-		if (id != other.id)
+		if (active != other.active)
 			return false;
 		if (jobId != other.jobId)
 			return false;
@@ -72,14 +75,14 @@ public class Job_Student {
 
 	@Override
 	public String toString() {
-		return "Job_Student [id=" + id + ", jobId=" + jobId + ", studentId=" + studentId + "]";
+		return "Job_Student [jobId=" + jobId + ", studentId=" + studentId + ", active=" + active + "]";
 	}
 
-	public Job_Student(int id, int jobId, int studentId) {
+	public Job_Student(int jobId, int studentId, boolean active) {
 		super();
-		this.id = id;
 		this.jobId = jobId;
 		this.studentId = studentId;
+		this.active = active;
 	}
 
 	public Job_Student() {

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ import com.revature.models.Business;
 import com.revature.models.Job;
 import com.revature.services.BusinessService;
 
-@CrossOrigin(allowedHeaders = "content-type", methods = { RequestMethod.GET, RequestMethod.POST })
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "content-type", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE })
 @RestController
 @RequestMapping("/business")
 public class BusinessController {
@@ -42,6 +43,11 @@ public class BusinessController {
 	@PostMapping("/rsvpEvent")
 	public Business rsvpEvent(@RequestBody Business_Event_DTO dto) {
 		return this.businessService.rsvpEvent(dto);
+	}
+	
+	@DeleteMapping("/removeEvent/b_id={b_id}&e_id={e_id}")
+	public Business removeEvent(@PathVariable int b_id, @PathVariable int e_id) {
+		return this.businessService.removeEvent(b_id, e_id);
 	}
 
 	@GetMapping("/{id}")
