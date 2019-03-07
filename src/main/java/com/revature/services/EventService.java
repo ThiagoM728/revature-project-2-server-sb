@@ -44,4 +44,9 @@ public class EventService {
 		return eventRepository.getAllEvents();
 	}
 
+	public List<Event> getEventsRSVP(int id) {
+		// TODO Auto-generated method stub
+		return eventRepository.getEventsRSVP(id);
+	}
+
 }
