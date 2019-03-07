@@ -102,7 +102,7 @@ public class StudentRepository {
 			Root<Job_Student> root = criteria.from(Job_Student.class);
 			// System.out.println(id);
 			criteria.select(root).where(cb.equal(root.get("studentId"), id));
-			criteria.select(root).where(cb.equal(root.get("active"), true));
+//			criteria.select(root).where(cb.equal(root.get("active"), true));
 			Query<Job_Student> query = session.createQuery(criteria); 
 			List<Job_Student> temp = query.getResultList();
 			List<Job> results = new ArrayList<Job>();

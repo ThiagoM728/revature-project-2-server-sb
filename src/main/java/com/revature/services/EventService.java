@@ -39,4 +39,9 @@ public class EventService {
 		return eventRepository.getBusiness(id);
 	}
 
+	public List<Event> getAllEvent() {
+		// TODO Auto-generated method stub
+		return eventRepository.getAllEvents();
+	}
+
 }

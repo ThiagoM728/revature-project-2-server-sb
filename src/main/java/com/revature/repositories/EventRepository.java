@@ -85,4 +85,18 @@ public class EventRepository {
 		}
 	}
 
+	public List<Event> getAllEvents() {
+		// TODO Auto-generated method stub
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try (Session session = sf.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Event> criteria = cb.createQuery(Event.class);
+			Root<Event> root = criteria.from(Event.class);
+			// System.out.println(id);
+			criteria.select(root);
+			Query<Event> query = session.createQuery(criteria); 
+			return query.getResultList();
+		}
+	}
+
 }
