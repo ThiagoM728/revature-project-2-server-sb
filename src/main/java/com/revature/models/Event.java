@@ -29,6 +29,15 @@ public class Event {
 	
 	@Column(name= "map", length=30)
 	private Boolean map;
+	
+	@Column(length=255)
+	private String description;
+	
+	@Column(name="contact_email", length=50)
+	private String contactEmail;
+	
+	@Column(name="contact_name", length=50)
+	private String contactName;
 
 	public int getId() {
 		return id;
@@ -78,12 +87,39 @@ public class Event {
 		this.map = map;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getContactEmail() {
+		return contactEmail;
+	}
+
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public void setContactName(String contactName) {
+		this.contactName = contactName;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((Location == null) ? 0 : Location.hashCode());
+		result = prime * result + ((contactEmail == null) ? 0 : contactEmail.hashCode());
+		result = prime * result + ((contactName == null) ? 0 : contactName.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
+		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((map == null) ? 0 : map.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
@@ -105,10 +141,25 @@ public class Event {
 				return false;
 		} else if (!Location.equals(other.Location))
 			return false;
+		if (contactEmail == null) {
+			if (other.contactEmail != null)
+				return false;
+		} else if (!contactEmail.equals(other.contactEmail))
+			return false;
+		if (contactName == null) {
+			if (other.contactName != null)
+				return false;
+		} else if (!contactName.equals(other.contactName))
+			return false;
 		if (date == null) {
 			if (other.date != null)
 				return false;
 		} else if (!date.equals(other.date))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
 			return false;
@@ -133,15 +184,12 @@ public class Event {
 	@Override
 	public String toString() {
 		return "Event [id=" + id + ", name=" + name + ", Location=" + Location + ", date=" + date + ", photo=" + photo
-				+ ", map=" + map + "]";
+				+ ", map=" + map + ", description=" + description + ", contactEmail=" + contactEmail + ", contactName="
+				+ contactName + "]";
 	}
 
-	public Event() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Event(int id, String name, String location, Date date, Boolean photo, Boolean map) {
+	public Event(int id, String name, String location, Date date, Boolean photo, Boolean map, String description,
+			String contactEmail, String contactName) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -149,8 +197,14 @@ public class Event {
 		this.date = date;
 		this.photo = photo;
 		this.map = map;
-	} 
-	
-	
+		this.description = description;
+		this.contactEmail = contactEmail;
+		this.contactName = contactName;
+	}
+
+	public Event() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 	
 }
