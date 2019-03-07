@@ -85,4 +85,39 @@ public class EventRepository {
 		}
 	}
 
+	public List<Event> getAllEvents() {
+		// TODO Auto-generated method stub
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try (Session session = sf.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Event> criteria = cb.createQuery(Event.class);
+			Root<Event> root = criteria.from(Event.class);
+			// System.out.println(id);
+			criteria.select(root);
+			Query<Event> query = session.createQuery(criteria); 
+			return query.getResultList();
+		}
+	}
+
+	public List<Event> getEventsRSVP(int id) {
+		// TODO Auto-generated method stub
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try (Session session = sf.openSession()) {
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Business_Event> criteria = cb.createQuery(Business_Event.class);
+			Root<Business_Event> root = criteria.from(Business_Event.class);
+			// System.out.println(id);
+			criteria.select(root);
+			criteria.where(cb.equal(root.get("businessId"), id));
+			Query<Business_Event> query = session.createQuery(criteria); 
+			List<Business_Event> temp = query.getResultList();
+			List<Event> result = new ArrayList<Event>();
+			for(Business_Event i : temp) {
+				Event event = findEventById(i.getEventId());
+				result.add(event);
+			}
+			return result;
+		}
+	}
+
 }

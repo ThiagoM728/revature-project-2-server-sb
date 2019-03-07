@@ -45,12 +45,12 @@ public class StudentController {
 		return this.studentService.createFav(dto);
 	}
 	
-	@GetMapping("favJobs/{id}")
+	@GetMapping("/favJobs/{id}")
 	public List<Job> getFavJobs(@PathVariable int id) {
 		return this.studentService.getFavJobs(id);
 	}
 	
-	@DeleteMapping("removeFav/studentId={s_id}&jobId={j_id}")
+	@DeleteMapping("/removeFav/studentId={s_id}&jobId={j_id}")
 	public String deleteFav(@PathVariable int s_id, @PathVariable int j_id) {
 		System.out.println(s_id + " " + j_id);
 		return this.studentService.deleteFav(s_id, j_id);

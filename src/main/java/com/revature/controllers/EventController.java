@@ -42,9 +42,19 @@ public class EventController {
 		return this.eventService.findEventById(id);
 	}
 	
-	@GetMapping("viewBusiness/{id}")
+	@GetMapping("/viewBusiness/{id}")
 	public List<Business> getBusinessAtEvent(@PathVariable int id) {
 		return this.eventService.getBusiness(id);
+	}
+	
+	@GetMapping("/viewEventsRSVP/{id}")
+	public List<Event> getEventsRSVP(@PathVariable int id) {
+		return this.eventService.getEventsRSVP(id);
+	}
+	
+	@GetMapping("")
+	public List<Event> getAllEvents() {
+		return this.eventService.getAllEvent();
 	}
 	
 	@PutMapping("/update/{id}")
