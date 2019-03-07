@@ -12,11 +12,11 @@ import javax.persistence.Id;
 public class Job_Student implements Serializable {
 	@Id
 	@Column(length = 20, name = "job_id")
-	private int jobId;
+	private Integer jobId;
 
 	@Id
 	@Column(length = 20, name = "student_id")
-	private int studentId;
+	private Integer studentId;
 
 	@Column(length = 10)
 	private boolean active;

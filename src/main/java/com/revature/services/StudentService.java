@@ -95,8 +95,8 @@ public class StudentService {
 		return studentRepository.getFavJobs(id);
 	}
 
-	public Job removeFavJob(int s_id, int j_id) {
+	public String deleteFav(int s_id, int j_id) {
 		// TODO Auto-generated method stub
-		return studentRepository.removeFavJob(s_id, j_id);
+		return studentRepository.deleteFav(s_id, j_id);
 	}
 }
