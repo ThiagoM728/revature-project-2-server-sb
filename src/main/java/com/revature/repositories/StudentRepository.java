@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
@@ -126,8 +127,11 @@ public class StudentRepository {
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<Job_Student> criteria = cb.createQuery(Job_Student.class);
 			Root<Job_Student> root = criteria.from(Job_Student.class);
-			criteria.select(root).where(cb.equal(root.get("studentId"), s_id));
-			criteria.select(root).where(cb.equal(root.get("jobId"), j_id));
+			criteria.select(root);
+			criteria.where(
+					cb.equal(root.get("studentId"), s_id),
+					cb.equal(root.get("jobId"), j_id)
+					);
 			Query<Job_Student> query = session.createQuery(criteria); 
 			List<Job_Student> temp = query.getResultList();	
 			boolean result = !(temp.isEmpty());

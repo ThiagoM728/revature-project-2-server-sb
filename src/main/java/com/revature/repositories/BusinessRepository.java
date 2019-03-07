@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -101,10 +102,57 @@ public class BusinessRepository {
 			be.setEventId(event_id);
 			be.setActive(true);
 			
-			int id = (int) session.save(be);
-//			be.setId(id);
+			if(!isRSVP(business_id, event_id)) {
+				Transaction tx = session.beginTransaction();
+				session.persist(be);
+				session.flush();
+				tx.commit();
+			}
 			return business;
 		}
-		
+	}
+	
+	public boolean isRSVP(int b_id, int e_id) {
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try (Session session = sf.openSession()) {
+			
+			CriteriaBuilder cb = session.getCriteriaBuilder();
+			CriteriaQuery<Business_Event> criteria = cb.createQuery(Business_Event.class);
+			Root<Business_Event> root = criteria.from(Business_Event.class);
+			criteria.select(root);
+			criteria.where(
+					cb.equal(root.get("eventId"), e_id),
+					cb.equal(root.get("businessId"), b_id)
+					);
+			Query<Business_Event> query = session.createQuery(criteria); 
+			List<Business_Event> temp = query.getResultList();	
+			boolean result = !(temp.isEmpty());
+			return result;
+		}
+	}
+
+	public Business removeEvent(int b_id, int e_id) {
+		SessionFactory sf = emf.unwrap(SessionFactory.class);
+		try (Session session = sf.openSession()) {
+			Business business = new Business();
+			try {
+				business = findById(b_id);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Transaction tx = session.beginTransaction();
+			Query query = session.createQuery("delete Business_Event where businessId = :businessId AND eventId = :eventId");
+			query.setParameter("businessId", b_id);
+			query.setParameter("eventId", e_id);
+//			 
+			int temp = query.executeUpdate();
+			tx.commit();
+			String result;
+			if (temp > 0) {
+			    return business;
+			}
+			return null;
+		}
 	}
 }

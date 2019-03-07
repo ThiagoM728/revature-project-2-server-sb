@@ -107,4 +107,9 @@ public class BusinessService {
 		int event_id = dto.getEventId();
 		return businessRepository.rsvpEvent(business_id, event_id);
 	}
+
+	public Business removeEvent(int b_id, int e_id) {
+		// TODO Auto-generated method stub
+		return businessRepository.removeEvent(b_id, e_id);
+	}
 }
