@@ -46,7 +46,7 @@ public class JobController {
 		return this.jobService.getJob(id);
 	}
 	
-	@GetMapping("getCompany/jobId={id}")
+	@GetMapping("/getCompany/jobId={id}")
 	public Business getBusiness(@PathVariable int id) {
 		System.out.println(id);
 		return this.jobService.getBusiness(id);
